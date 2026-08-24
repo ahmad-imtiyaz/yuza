@@ -5,3 +5,5 @@ dist/
 session-extracted.json
 omp-session-*.html
 _ref/
+
+.vercel

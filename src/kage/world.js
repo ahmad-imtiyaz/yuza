@@ -1,6 +1,6 @@
 
 /* =====================================================================
-   YAZNA — a live Kyoto mountain temple, after dark.
+   YAZNA — a live Semarang mountain temple, after dark.
    Everything on this page is generated at runtime: no photographs,
    no video, no external assets beyond three.js and two subset fonts.
    ===================================================================== */
