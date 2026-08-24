@@ -38,7 +38,7 @@ export default function Hero() {
           <span className="peek-cap"><b className="jp">山門</b><i>Sanmon — before the bell</i></span>
         </a>
       
-        <div className="word-fb" aria-hidden="true">KAGE</div>
+        <div className="word-fb" aria-hidden="true">YAZNA</div>
       
         <div className="hero-side" data-rv="up">
           <span className="v jp">影の道</span>
