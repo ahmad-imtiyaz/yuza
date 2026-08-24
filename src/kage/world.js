@@ -1,6 +1,6 @@
 
 /* =====================================================================
-   YAZNA — a live Semarang mountain temple, after dark.
+   YUZA — a live Semarang mountain temple, after dark.
    Everything on this page is generated at runtime: no photographs,
    no video, no external assets beyond three.js and two subset fonts.
    ===================================================================== */
@@ -1821,7 +1821,7 @@ function buildWordmark() {
   const m = cvs(4, 4).getContext('2d');
   m.font = '600 ' + SZ + 'px Wordmark, sans-serif';
   m.textBaseline = 'alphabetic'; m.textAlign = 'left';
-  const word = 'YAZNA', gl = [];
+  const word = 'YUZA', gl = [];
   let pen = 0, ascMax = 0, descMax = 0, xMin = 1e9, xMax = -1e9;
   for (const ch of word) {
     const t = m.measureText(ch);
