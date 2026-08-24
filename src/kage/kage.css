@@ -165,6 +165,8 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .hero-foot{ padding-bottom:clamp(22px,4.2vh,42px); position:relative; z-index:2; }
 .hero-cue{ display:flex; align-items:center; justify-content:flex-end; gap:12px; margin-bottom:14px;
   font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); }
+.hero-cue-jp{ display:flex; justify-content:flex-end; margin-bottom:14px;
+  font-size:10px; letter-spacing:.1em; color:var(--bone-dim); font-family:'NotoJP','Onest',sans-serif; }
 .hero-cue .track{ width:54px; height:1px; background:var(--line); position:relative; overflow:hidden; }
 .hero-cue .track i{ position:absolute; inset:0; background:var(--bone); transform-origin:left;
   animation:cue 2.8s var(--ease-io) infinite; }
