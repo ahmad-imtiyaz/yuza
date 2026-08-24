@@ -11,7 +11,7 @@ export default function Hero() {
             <span className="mask-line"><span>reveals the</span></span>
             <span className="mask-line"><span>unseen.</span></span>
           </h1>
-          <p className="hero-sub body" data-rv="up">Enter Kyoto through its quiet thresholds, where ritual,
+          <p className="hero-sub body" data-rv="up">Enter Semarang through its quiet thresholds, where ritual,
             craft, and memory shape the path.</p>
         </div>
       

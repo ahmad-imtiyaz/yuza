@@ -22,7 +22,7 @@ export default function Footer() {
               <circle cx="22" cy="25" r="8.6" fill="#e0231c" fillOpacity=".9"/>
               <path d="M5 13h34M9 18.4h26M22 8.5v27" stroke="#dfe7e0" strokeWidth="1.5"/>
             </svg>
-            <p>A five-chapter night walk through a Kyoto mountain temple. Three illustrated garden field notes
+            <p>A five-chapter night walk through a Semarang mountain temple. Three illustrated garden field notes
               sit inside a live Three.js sanctuary.</p>
           </div>
           <div><h4>Chapters</h4><ul>
@@ -46,7 +46,7 @@ export default function Footer() {
         <div className="foot-base">
           <span>© 2026 Kage — Kage no Michi</span>
           <span className="jp">静けさは一つの技である</span>
-          <span>WebGL · Onest · Kyoto</span>
+          <span>WebGL · Onest · Semarang</span>
         </div>
       </footer>
     </>
