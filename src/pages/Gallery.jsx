@@ -20,21 +20,35 @@ function useResponsiveTiles() {
   return tiles;
 }
 
-const PAGE_SIZE = 9;
+// 9 per halaman (3×3) di desktop, 8 (2×2×2) di mobile — mengikuti kolom grid.
+function usePageSize() {
+  const get = () => (typeof window !== 'undefined' && window.innerWidth < 640 ? 8 : 9);
+  const [size, setSize] = useState(get);
+  useEffect(() => {
+    const onResize = () => setSize(get());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  return size;
+}
 
 export default function Gallery() {
   const [preview, setPreview] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [page, setPage] = useState(1);
   const tiles = useResponsiveTiles();
+  const pageSize = usePageSize();
 
-  const pageCount = Math.max(1, Math.ceil(GARDEN_PHOTOS.length / PAGE_SIZE));
-  const pagePhotos = GARDEN_PHOTOS.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const pageCount = Math.max(1, Math.ceil(GARDEN_PHOTOS.length / pageSize));
+  const safePage = Math.min(page, pageCount);
+  const pagePhotos = GARDEN_PHOTOS.slice((safePage - 1) * pageSize, safePage * pageSize);
 
   const goToPage = (p) => {
     setPage(Math.min(Math.max(1, p), pageCount));
     document.querySelector('.gallery-grid-head')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
+
+  useEffect(() => { setPage((p) => Math.min(p, pageCount)); }, [pageCount]);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -125,17 +139,17 @@ export default function Gallery() {
 
         {pageCount > 1 && (
           <nav className="pager" aria-label="Halaman galeri">
-            <button className="pager-btn" disabled={page === 1} onClick={() => goToPage(page - 1)} data-cursor>←</button>
+            <button className="pager-btn" disabled={safePage === 1} onClick={() => goToPage(safePage - 1)} data-cursor>←</button>
             {Array.from({ length: pageCount }, (_, i) => i + 1).map((n) => (
               <button
                 key={n}
-                className={`pager-num${n === page ? ' is-on' : ''}`}
-                aria-current={n === page ? 'page' : undefined}
+                className={`pager-num${n === safePage ? ' is-on' : ''}`}
+                aria-current={n === safePage ? 'page' : undefined}
                 onClick={() => goToPage(n)}
                 data-cursor
               >{String(n).padStart(2, '0')}</button>
             ))}
-            <button className="pager-btn" disabled={page === pageCount} onClick={() => goToPage(page + 1)} data-cursor>→</button>
+            <button className="pager-btn" disabled={safePage === pageCount} onClick={() => goToPage(safePage + 1)} data-cursor>→</button>
           </nav>
         )}
       </div>
