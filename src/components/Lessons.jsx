@@ -47,11 +47,11 @@ export default function Lessons() {
             <h3>Cita-citamu masa depan mau jadi apa?<em className="jp">夢</em></h3>
             <p>Dan yang terakhir — mimpinya untuk hari-hari yang akan datang.</p>
             <figure className="les-shot">
-              <figcaption className="les-shot-cap">pertanyaannya</figcaption>
+              <figcaption className="les-shot-cap">質問</figcaption>
               <img src="/assets/ask/masa-depan-1.jpeg" alt="Pertanyaan tentang cita-cita" loading="lazy" decoding="async" />
             </figure>
             <figure className="les-shot">
-              <figcaption className="les-shot-cap">jawabannya</figcaption>
+              <figcaption className="les-shot-cap">答え</figcaption>
               <img src="/assets/ask/masa-depan-2.jpeg" alt="Jawaban Zee — cita-cita" loading="lazy" decoding="async" />
             </figure>
           </div>
