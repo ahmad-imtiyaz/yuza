@@ -1,11 +1,33 @@
 import { useEffect, useState } from 'react';
+import DriftWall from '../components/DriftWall.jsx';
 import { GARDEN_PHOTOS } from '../photos.js';
 
-// Halaman /gallery — seluruh kenangan dalam grid.
+// Halaman /gallery — DriftWall interaktif + grid seluruh kenangan.
+function useResponsiveTiles() {
+  const get = () => {
+    if (typeof window === 'undefined') return { columns: 3, tileWidth: 220, tileHeight: 290 };
+    const w = window.innerWidth;
+    if (w < 640) return { columns: 2, tileWidth: Math.round(w * 0.36), tileHeight: Math.round(w * 0.48) };
+    if (w < 1080) return { columns: 3, tileWidth: 170, tileHeight: 224 };
+    return { columns: 3, tileWidth: 220, tileHeight: 290 };
+  };
+  const [tiles, setTiles] = useState(get);
+  useEffect(() => {
+    const onResize = () => setTiles(get());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  return tiles;
+}
+
 export default function Gallery() {
   const [preview, setPreview] = useState(null);
+  const tiles = useResponsiveTiles();
 
-  const closePreview = () => setPreview(null);
+  const closePreview = () => {
+    setPreview(null);
+    if (typeof window !== 'undefined' && window.__driftWallResume) window.__driftWallResume();
+  };
 
   useEffect(() => {
     if (!preview) return;
@@ -19,6 +41,7 @@ export default function Gallery() {
       <canvas id="gl" aria-hidden="true"></canvas>
       <div id="vignette"></div>
       <div id="grain"></div>
+      <div className="cur-dot" id="cursor"></div>
 
       <header className="nav" id="nav">
         <a className="brand" href="/" data-cursor>
@@ -35,24 +58,42 @@ export default function Gallery() {
       </header>
 
       <div className="page gallery-body">
-        <div className="sec-head" data-rv="fade">
+        <div className="sec-head">
           <span className="k"><b>02</b> — Still Gardens</span><span className="rule"></span><span className="k jp">庭園</span>
         </div>
 
-        {GARDEN_PHOTOS.length === 0 ? (
-          <p className="body">Belum ada foto — segera diisi.</p>
-        ) : (
-          <div className="gallery-grid">
-            {GARDEN_PHOTOS.map((p) => (
-              <figure className="g-card" key={p.image} data-rv="up" onClick={() => setPreview(p)} data-cursor>
-                <div className="g-fr">
-                  <img src={p.image} alt={p.title ?? ''} loading="lazy" decoding="async" />
-                </div>
-                <figcaption className="g-cap"><b>{p.title}</b></figcaption>
-              </figure>
-            ))}
-          </div>
-        )}
+        <p className="body gallery-intro">
+          Semua kenangan kita di satu tempat. Arahkan kursor untuk melihat lebih dekat,
+          klik fotonya untuk melihat lebih jelas.
+        </p>
+
+        <div className="drift-wrap">
+          <DriftWall
+            items={GARDEN_PHOTOS}
+            onTileClick={(item) => setPreview(item)}
+            pauseOnHover={true}
+            dim={0.5}
+            fade={0.7}
+            radius={14}
+            {...tiles}
+          />
+        </div>
+
+        <div className="sec-head gallery-grid-head">
+          <span className="k"><b>全て</b> — Semua Kenangan</span><span className="rule"></span><span className="k jp">全部</span>
+        </div>
+
+        <div className="gallery-grid">
+          {GARDEN_PHOTOS.map((p) => (
+            <figure className="g-card" key={p.image} onClick={() => setPreview(p)} data-cursor>
+              <div className="g-fr">
+                <img src={p.image} alt={p.title ?? ''} loading="lazy" decoding="async" />
+                <i className="g-glow" aria-hidden="true"></i>
+              </div>
+              <figcaption className="g-cap"><b>{p.title}</b></figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
 
       {preview && (
@@ -63,6 +104,7 @@ export default function Gallery() {
             </button>
             <div className="pv-fr">
               <img src={preview.image} alt={preview.title ?? ''} decoding="async" />
+              <i className="pv-glow" aria-hidden="true"></i>
             </div>
             <figcaption className="pv-cap">
               <b>{preview.title}</b><span className="jp">思ひ出</span>

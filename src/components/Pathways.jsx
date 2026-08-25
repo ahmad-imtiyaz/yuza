@@ -1,45 +1,6 @@
 // Pathways — ported dari Kage landing page (threeui.com).
 // Edit bebas: markup ini adalah tampilan; logika scroll/Three.js ada di src/kage/world.js
-import { useEffect, useState } from 'react';
-import DriftWall from './DriftWall.jsx';
-import { GARDEN_PHOTOS } from '../photos.js';
-
-function useResponsiveTiles() {
-  const get = () => {
-    if (typeof window === 'undefined') return { columns: 3, tileWidth: 220, tileHeight: 290 };
-    const w = window.innerWidth;
-    if (w < 640) return { columns: 2, tileWidth: Math.round(w * 0.36), tileHeight: Math.round(w * 0.48) };
-    if (w < 1080) return { columns: 3, tileWidth: 170, tileHeight: 224 };
-    return { columns: 3, tileWidth: 220, tileHeight: 290 };
-  };
-  const [tiles, setTiles] = useState(get);
-  useEffect(() => {
-    const onResize = () => setTiles(get());
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
-  return tiles;
-}
-
 export default function Pathways() {
-  const items = GARDEN_PHOTOS;
-  const tiles = useResponsiveTiles();
-  const [preview, setPreview] = useState(null);
-
-  const openPreview = (item) => setPreview(item);
-  const closePreview = () => {
-    setPreview(null);
-    if (typeof window !== 'undefined' && window.__driftWallResume) window.__driftWallResume();
-  };
-
-  // esc untuk tutup preview
-  useEffect(() => {
-    if (!preview) return;
-    const onKey = (e) => { if (e.key === 'Escape') closePreview(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [preview]);
-
   return (
     <>
       <section className="sec" id="pathways" data-cam="2">
@@ -61,43 +22,44 @@ export default function Pathways() {
         <div className="sec-head" data-rv="fade">
           <span className="k"><b>02</b> — Still Gardens</span><span className="rule"></span><span className="k jp">庭園</span>
         </div>
-
-        <div className="drift-wrap" data-rv="fade">
-          <DriftWall
-            items={items}
-            onTileClick={openPreview}
-            pauseOnHover={true}
-            dim={0.5}
-            fade={0.7}
-            radius={14}
-            {...tiles}
-          />
+        <div className="cards" id="cards">
+          <article className="card" data-rv="up" data-view="0" data-cursor>
+            <div className="card-fr" data-frame>
+              <img src="/assets/garden/photo-1.jpg" alt="Memory 01" loading="lazy" decoding="async" />
+              <span className="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" strokeWidth="1.3"/></svg></span>
+              <i className="glow" style={{ '--gx': '80.2%', '--gy': '23.9%', '--gr': '22%', '--gt': '6.1s', '--gt2': '9.7s', '--gc1': 'rgba(255,142,108,.50)', '--gc2': 'rgba(212,56,38,.24)' }}></i>
+              <div className="card-lab"><b>Memory 01</b><span className="jp">思ひ出</span></div>
+            </div>
+            <div className="card-meta"><span>Our moments</span><span>01 / 03</span></div>
+          </article>
+          <article className="card" data-rv="up" data-view="1" data-cursor>
+            <div className="card-fr" data-frame>
+              <img src="/assets/garden/photo-2.jpg" alt="Memory 02" loading="lazy" decoding="async" />
+              <span className="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" strokeWidth="1.3"/></svg></span>
+              <i className="glow glow--flame" style={{ '--gx': '70.5%', '--gy': '47.2%', '--gr': '14%', '--gt': '3.7s', '--gt2': '5.3s', '--gc1': 'rgba(255,198,124,.62)', '--gc2': 'rgba(226,118,40,.30)' }}></i>
+              <div className="card-lab"><b>Memory 02</b><span className="jp">思ひ出</span></div>
+            </div>
+            <div className="card-meta"><span>Our moments</span><span>02 / 03</span></div>
+          </article>
+          <article className="card" data-rv="up" data-view="2" data-cursor>
+            <div className="card-fr" data-frame>
+              <img src="/assets/garden/photo-3.jpg" alt="Memory 03" loading="lazy" decoding="async" />
+              <span className="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" strokeWidth="1.3"/></svg></span>
+              <i className="glow" style={{ '--gx': '48.0%', '--gy': '16.8%', '--gr': '20%', '--gt': '7.3s', '--gt2': '11.2s', '--gc1': 'rgba(255,138,104,.52)', '--gc2': 'rgba(208,54,36,.24)' }}></i>
+              <div className="card-lab"><b>Memory 03</b><span className="jp">思ひ出</span></div>
+            </div>
+            <div className="card-meta"><span>Our moments</span><span>03 / 03</span></div>
+          </article>
         </div>
 
         <div className="drift-more" data-rv="fade">
           <a className="arrowlink" href="/gallery" data-cursor>
-            <span>lihat seluruh kenangan...</span>
+            <span>lihat-lihat foto yuu...</span>
             <span className="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" strokeWidth="1.3"/></svg></span>
           </a>
         </div>
 
       </section>
-
-      {preview && (
-        <div className="pv-backdrop" onClick={closePreview}>
-          <figure className="pv-card" onClick={(e) => e.stopPropagation()}>
-            <button className="pv-close" aria-label="Close" onClick={closePreview}>
-              <svg viewBox="0 0 14 14" fill="none" width="14" height="14"><path d="M2 2l10 10M12 2 2 12" stroke="#dfe7e0" strokeWidth="1.3"/></svg>
-            </button>
-            <div className="pv-fr">
-              <img src={preview.image} alt={preview.title ?? ''} decoding="async" />
-            </div>
-            <figcaption className="pv-cap">
-              <b>{preview.title}</b><span className="jp">思ひ出</span>
-            </figcaption>
-          </figure>
-        </div>
-      )}
     </>
   );
 }
