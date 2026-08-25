@@ -308,17 +308,17 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .drift-more{ display:flex; justify-content:center; margin-top:26px; }
 
 /* foto asli di dalam kartu bawaan (Pathways home) */
-#cards .card-fr{ background:none !important; }
+#cards .card-fr{ background:none !important; border-radius:16px; overflow:hidden; }
+#cards .card-fr::after{ border-radius:16px; }
 #cards .card-fr img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
+  border-radius:16px;
   filter:saturate(.92); transition:filter .5s var(--ease); }
 #cards .card:hover .card-fr img{ filter:saturate(1.05); }
-/* kedip lembut tiap ganti foto (per 4.5s) */
-.card-blink{ animation:cardBlink 1.1s var(--ease-out); }
-@keyframes cardBlink{
-  0%{ opacity:0; filter:brightness(2.2) saturate(0); }
-  30%{ opacity:.4; }
-  55%{ opacity:.25; }
-  100%{ opacity:1; filter:brightness(1) saturate(.92); }
+/* ganti foto halus — crossfade lembut + zoom tipis, tanpa kedip */
+.card-blink{ animation:cardSwap 1.6s var(--ease-out); }
+@keyframes cardSwap{
+  from{ opacity:0; transform:scale(1.045); }
+  to{ opacity:1; transform:scale(1); }
 }
 
 /* tombol pill "lihat-lihat foto" — selaras tema */
