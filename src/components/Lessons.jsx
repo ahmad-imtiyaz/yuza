@@ -31,7 +31,7 @@ export default function Lessons() {
             <h3>Tiga lagu yang kamu suka<em className="jp">音楽</em></h3>
             <p>Aku tanya, dia jawab. Ini playlist hatinya, versi asli.</p>
             <figure className="les-shot">
-              <img src="/assets/zee/qa-1.jpg" alt="Screenshot jawaban Zee — lagu favorit" loading="lazy" decoding="async" />
+              <img src="/assets/ask/lagu.jpeg" alt="Screenshot jawaban Zee — lagu favorit" loading="lazy" decoding="async" />
             </figure>
           </div>
           <div className="les" data-les="1" data-cursor>
@@ -39,7 +39,7 @@ export default function Lessons() {
             <h3>Hewan favorit kamu apa?<em className="jp">動物</em></h3>
             <p>Jawaban yang bikin aku makin kenal dia.</p>
             <figure className="les-shot">
-              <img src="/assets/zee/qa-2.jpg" alt="Screenshot jawaban Zee — hewan favorit" loading="lazy" decoding="async" />
+              <img src="/assets/ask/hewan.jpeg" alt="Screenshot jawaban Zee — hewan favorit" loading="lazy" decoding="async" />
             </figure>
           </div>
           <div className="les" data-les="2" data-cursor>
@@ -47,7 +47,12 @@ export default function Lessons() {
             <h3>Cita-citamu masa depan mau jadi apa?<em className="jp">夢</em></h3>
             <p>Dan yang terakhir — mimpinya untuk hari-hari yang akan datang.</p>
             <figure className="les-shot">
-              <img src="/assets/zee/qa-3.jpg" alt="Screenshot jawaban Zee — cita-cita" loading="lazy" decoding="async" />
+              <figcaption className="les-shot-cap">pertanyaannya</figcaption>
+              <img src="/assets/ask/masa-depan-1.jpeg" alt="Pertanyaan tentang cita-cita" loading="lazy" decoding="async" />
+            </figure>
+            <figure className="les-shot">
+              <figcaption className="les-shot-cap">jawabannya</figcaption>
+              <img src="/assets/ask/masa-depan-2.jpeg" alt="Jawaban Zee — cita-cita" loading="lazy" decoding="async" />
             </figure>
           </div>
         </div>
