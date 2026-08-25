@@ -23,7 +23,7 @@ export default function Lessons() {
           <h2 className="display h-sec" data-rv="up">About Zee</h2>
           <p className="body-lg" data-rv="up">Mungkin kata orang-orang tiga pertanyaan ini bisa dibilang sangat sederhana,
             namun menurutku pertanyaan-pertanyaan seperti inilah yang membuat kita bisa lebih dekat
-            dan mengenal orang lebih dekat.</p>
+            dan mengenal satu sama lain.</p>
         </div>
         <div className="cur" id="cur">
           <div className="les" data-les="0" data-cursor>
