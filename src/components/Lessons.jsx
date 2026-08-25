@@ -21,8 +21,9 @@ export default function Lessons() {
         </div>
         <div className="cur-head">
           <h2 className="display h-sec" data-rv="up">About Zee</h2>
-          <p className="body-lg" data-rv="up">Tiga pertanyaan sederhana, dijawab langsung oleh orangnya.
-            Jawaban asli, tanpa diedit — persis seperti dia menjawab di Discord.</p>
+          <p className="body-lg" data-rv="up">Mungkin kata orang-orang tiga pertanyaan ini bisa dibilang sangat sederhana,
+            namun menurutku pertanyaan-pertanyaan seperti inilah yang membuat kita bisa lebih dekat
+            dan mengenal orang lebih dekat.</p>
         </div>
         <div className="cur" id="cur">
           <div className="les" data-les="0" data-cursor>
