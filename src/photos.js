@@ -7,10 +7,21 @@ const PHOTOS = [
   '/assets/garden/photo-3.jpg',
   '/assets/garden/photo-4.jpg',
   '/assets/garden/photo-5.jpg',
+  '/assets/garden/photo-6.jpg',
   '/assets/garden/photo-7.jpg',
   '/assets/garden/photo-8.jpg',
   '/assets/garden/photo-9.jpg',
   '/assets/garden/photo-10.jpg',
+  '/assets/garden/photo-11.jpg',
+  '/assets/garden/photo-12.jpg',
+  '/assets/garden/photo-13.jpg',
+  '/assets/garden/photo-14.jpg',
+  '/assets/garden/photo-15.jpg',
+  '/assets/garden/photo-16.jpg',
+  '/assets/garden/photo-17.jpg',
+  '/assets/garden/photo-18.jpg',
+  '/assets/garden/photo-19.jpg',
+  '/assets/garden/photo-20.jpg',
 ];
 
 export const GARDEN_PHOTOS = PHOTOS.map((src, i) => ({

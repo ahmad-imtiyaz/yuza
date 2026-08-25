@@ -22,7 +22,10 @@ function useResponsiveTiles() {
 
 export default function Gallery() {
   const [preview, setPreview] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const tiles = useResponsiveTiles();
+
+  const closeMenu = () => setMenuOpen(false);
 
   const closePreview = () => {
     setPreview(null);
@@ -36,6 +39,13 @@ export default function Gallery() {
     return () => window.removeEventListener('keydown', onKey);
   }, [preview]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+
   return (
     <div className="gallery-page">
       <canvas id="gl" aria-hidden="true"></canvas>
@@ -43,7 +53,7 @@ export default function Gallery() {
       <div id="grain"></div>
       <div className="cur-dot" id="cursor"></div>
 
-      <header className="nav" id="nav">
+      <header className={`nav${menuOpen ? ' menu-open' : ''}`} id="nav">
         <a className="brand" href="/" data-cursor>
           <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
             <circle cx="22" cy="25" r="8.6" fill="#e0231c" fillOpacity=".9"/>
@@ -53,8 +63,15 @@ export default function Gallery() {
           <span className="brand-tx"><b>YUZA</b><i>my tomodachi :3</i></span>
         </a>
         <nav className="nav-links">
-          <a className="nav-link" href="/" data-cursor><span>Kembali</span><span className="alt">帰る</span></a>
+          <a className="nav-link" href="/" data-cursor onClick={closeMenu}><span>Kembali</span><span className="alt">帰る</span></a>
         </nav>
+        <button
+          className={`nav-burger${menuOpen ? ' active' : ''}`}
+          aria-label="Menu"
+          aria-expanded={menuOpen}
+          data-cursor
+          onClick={() => setMenuOpen((v) => !v)}
+        ><i></i><i></i></button>
       </header>
 
       <div className="page gallery-body">
