@@ -516,6 +516,11 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .les h3{ font-size:clamp(16px,1.5vw,23px); font-weight:400; letter-spacing:-.005em; }
 .les h3 em{ font-style:normal; font-family:'NotoJP',sans-serif; font-size:.72em; color:var(--muted); margin-left:12px; letter-spacing:.24em; }
 .les p{ margin:0; font-size:13px; line-height:1.6; color:#909b95; text-shadow:0 1px 16px rgba(3,6,8,.92); }
+/* slot screenshot jawaban Discord (About Zee) */
+.les-shot{ margin:6px 0 0; grid-column:1 / -1; width:min(100%, 520px); justify-self:start;
+  border-radius:12px; overflow:hidden; border:1px solid var(--line-soft); background:#0b1016;
+  box-shadow:0 14px 44px rgba(0,0,0,.35); }
+.les-shot img{ display:block; width:100%; height:auto; }
 .les .t{ text-align:right; font-size:11px; letter-spacing:.14em; color:#8b958f; font-variant-numeric:tabular-nums; text-shadow:0 1px 16px rgba(3,6,8,.92); }
 .les .bar{ position:absolute; left:0; bottom:-1px; height:1px; width:100%; background:var(--vermilion);
   transform:scaleX(0); transform-origin:left; transition:transform .7s var(--ease-out); }
