@@ -563,6 +563,16 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .cta:hover i{ transform:none; }
 .cta:hover svg path{ stroke:#05070a; }
 
+/* — Afterlight: kata "afterlight" bercahaya seperti kunang-kunang — */
+.firefly{
+  color:#ffe7a6;
+  animation: fireflyGlow 2.6s ease-in-out infinite;
+}
+@keyframes fireflyGlow{
+  0%,100%{ text-shadow:0 0 4px rgba(255,221,140,.22), 0 0 9px rgba(255,198,104,.14); }
+  50%    { text-shadow:0 0 9px rgba(255,231,168,.85), 0 0 20px rgba(255,198,104,.5); }
+}
+
 /* — footer */
 .foot{ position:relative; padding:clamp(50px,8vh,96px) var(--pad) clamp(26px,4vh,40px);
   border-top:1px solid var(--line-soft); }
