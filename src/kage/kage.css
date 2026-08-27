@@ -604,41 +604,35 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 }
 
 /* — Lessons: swipe-to-reveal teks di mobile (gulungan ninjutsu) —
-   Teks disembunyikan di balik gambar; swipe membuka seperti membuka gulungan.
-   Arah swipe mengikuti sisi gambar (lihat data-img, diukur di JS). */
+   Gambar tetap di atas; swipe horizontal membuka teks di bawahnya (seperti
+   gulungan yang menggelar ke bawah), tanpa menutupi gambar. */
 @media (max-width:1080px){
   .les{ touch-action:pan-y; -webkit-user-select:none; user-select:none; cursor:grab; }
   .les.is-revealed{ cursor:default; }
-  .les-body{ position:relative; }
-  .les-txt{
-    position:absolute; inset:0; z-index:3; max-width:none;
-    display:flex; flex-direction:column; gap:12px; justify-content:flex-start;
-    padding:16px 18px; border-radius:12px; overflow:auto; touch-action:pan-y;
-    background:linear-gradient(180deg, rgba(12,17,23,.94), rgba(7,11,16,.97));
-    border:1px solid var(--line-soft);
-    box-shadow:inset 0 0 0 1px rgba(223,231,224,.05), 0 18px 50px rgba(0,0,0,.45);
-    pointer-events:none;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path .62s var(--ease-out);
-  }
-  .les[data-img="left"] .les-txt{ clip-path: inset(0 0 0 100%); }
-  .les.is-revealed .les-txt{ clip-path: inset(0 0 0 0); pointer-events:auto; }
-  .les-shot, .les-shots{
-    position:relative; z-index:2; touch-action:pan-y;
-    transition: transform .62s var(--ease-out), opacity .5s var(--ease-out);
-  }
+  .les-body{ display:flex; flex-direction:column; gap:14px; }
+  .les-shot, .les-shots{ order:-1; }            /* gambar selalu di atas */
   .les-shot img, .les-shots img{ -webkit-user-drag:none; user-drag:none; }
-  .les[data-img="right"] .les-shot,
-  .les[data-img="right"] .les-shots{ --exit:-104%; }
-  .les[data-img="left"] .les-shot,
-  .les[data-img="left"] .les-shots{ --exit:104%; }
-  .les.is-revealed .les-shot,
-  .les.is-revealed .les-shots{ transform: translateX(var(--exit)); opacity:0; pointer-events:none; }
-  /* teks tetap ada di DOM, cuma tersembunyi di balik gambar sampai di-swipe */
+  .les-txt{
+    order:0; width:100%; max-width:none;
+    max-height:0; opacity:0; overflow:hidden;
+    border-radius:12px;
+    background:linear-gradient(180deg, rgba(12,17,23,.92), rgba(7,11,16,.96));
+    border:1px solid var(--line-soft);
+    box-shadow:inset 0 0 0 1px rgba(223,231,224,.05);
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-10px);
+    padding:0 16px;
+    transition: max-height .55s var(--ease-out), opacity .4s var(--ease-out),
+                clip-path .6s var(--ease-out), transform .55s var(--ease-out), padding .45s var(--ease-out);
+  }
+  .les.is-revealed .les-txt{
+    max-height:1500px; opacity:1; overflow:auto;
+    clip-path: inset(0 0 0 0); transform:none; padding:16px;
+  }
+  /* teks tetap ada di DOM (biar bisa dibuka), cuma terlipat saat belum di-swipe */
   .les p{ display:block; }
   .les-hint{
-    position:absolute; left:50%; bottom:12px; z-index:4;
-    transform:translateX(-50%);
+    order:0; align-self:center; margin-top:2px;
     display:inline-flex; align-items:center; gap:8px;
     padding:8px 14px; border-radius:100px; white-space:nowrap;
     background:rgba(4,7,10,.6); border:1px solid var(--line-soft);
@@ -653,8 +647,8 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
   .les.is-revealed .les-hint{ display:none; }
 }
 @keyframes lesBlink{
-  0%,100%{ opacity:.4; transform:translateX(-50%) translateY(0); }
-  50%    { opacity:1;  transform:translateX(-50%) translateY(-3px); }
+  0%,100%{ opacity:.4; }
+  50%    { opacity:1; }
 }
 @keyframes lesNudgeL{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(-5px); } }
 @keyframes lesNudgeR{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(5px); } }

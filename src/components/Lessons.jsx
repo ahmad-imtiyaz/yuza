@@ -2,34 +2,25 @@
 // Edit bebas: markup ini adalah tampilan; logika scroll/Three.js ada di src/kage/world.js
 import { useRef, useState, useLayoutEffect } from "react";
 
-// Satu kartu "About Zee". Di mobile teks disembunyikan di belakang gambar,
-// dan dibuka dengan swipe (arah mengikuti sisi gambar: kiri -> swipe kanan,
-// kanan -> swipe kiri) seperti membuka gulungan ninjutsu.
+// Satu kartu "About Zee". Di mobile teks disembunyikan di bawah gambar dan
+// dibuka dengan swipe horizontal (arah mengikuti sisi gambar di desktop:
+// genap -> gambar kiri -> swipe kanan, ganjil -> gambar kanan -> swipe kiri),
+// membuka seperti gulungan ninjutsu yang menggelar ke bawah.
 function Lesson({ index, num, title, children }) {
   const [revealed, setRevealed] = useState(false);
-  const [side, setSide] = useState("right"); // "left" = gambar di kiri, "right" = gambar di kanan
   const ref = useRef(null);
-  const startX = useRef(0);
   const dragging = useRef(false);
-  const suppressClick = useRef(false);
+  const axis = useRef(null); // "h" | "v" | null
+  const start = useRef({ x: 0, y: 0 });
+  const moved = useRef(false);
   const isMobile = useRef(false);
 
-  // Ukur sisi gambar + pantau breakpoint, biar arah swipe selalu cocok dgn layout.
+  // Sisi gambar mengikuti layout zigzag desktop (nth-child): genap -> kiri, ganjil -> kanan.
+  const side = Number(index) % 2 === 1 ? "left" : "right";
+
   useLayoutEffect(() => {
     const mq = window.matchMedia("(max-width:1080px)");
-    const sync = () => {
-      isMobile.current = mq.matches;
-      const el = ref.current;
-      if (!el || !mq.matches) return;
-      const body = el.querySelector(".les-body");
-      const shot = el.querySelector(".les-shot, .les-shots");
-      if (!body || !shot) return;
-      const b = body.getBoundingClientRect();
-      const s = shot.getBoundingClientRect();
-      const shotCenter = s.left + s.width / 2;
-      const bodyCenter = b.left + b.width / 2;
-      setSide(shotCenter < bodyCenter ? "left" : "right");
-    };
+    const sync = () => { isMobile.current = mq.matches; };
     sync();
     mq.addEventListener("change", sync);
     return () => mq.removeEventListener("change", sync);
@@ -38,32 +29,42 @@ function Lesson({ index, num, title, children }) {
   const onDown = (e) => {
     if (!isMobile.current) return;
     dragging.current = true;
-    startX.current = e.clientX;
+    axis.current = null;
+    moved.current = false;
+    start.current = { x: e.clientX, y: e.clientY };
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {}
+  };
+  const onMove = (e) => {
+    if (!dragging.current) return;
+    const dx = e.clientX - start.current.x;
+    const dy = e.clientY - start.current.y;
+    if (!axis.current) {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return; // belum cukup gerak
+      axis.current = Math.abs(dx) > Math.abs(dy) ? "h" : "v";
+      if (axis.current === "v") { dragging.current = false; return; } // biarkan scroll vertikal
+    }
+    if (axis.current !== "h") return;
+    moved.current = true;
   };
   const onUp = (e) => {
     if (!dragging.current) return;
     dragging.current = false;
-    if (!isMobile.current) return;
-    const dx = e.clientX - startX.current;
-    if (Math.abs(dx) < 40) return; // bukan swipe sungguhan
-    suppressClick.current = true;
+    try { e.currentTarget.releasePointerCapture(e.pointerId); } catch (_) {}
+    if (axis.current !== "h") { axis.current = null; return; }
+    const dx = e.clientX - start.current.x;
+    const dir = side === "left" ? 1 : -1; // swipe kanan jika gambar di kiri
+    const prog = (dx * dir) / 55; // ambang 55px
     if (!revealed) {
-      // gambar di kiri -> swipe ke kanan; gambar di kanan -> swipe ke kiri
-      const wantRight = side === "left";
-      const correct = (wantRight && dx > 0) || (!wantRight && dx < 0);
-      if (correct) setRevealed(true);
-    } else {
-      setRevealed(false); // swipe apa pun menutup kembali
+      if (prog > 1) setRevealed(true);
+    } else if (prog < -1) {
+      setRevealed(false); // swipe berlawanan menutup kembali
     }
+    axis.current = null;
   };
   const onClick = () => {
-    if (suppressClick.current) {
-      suppressClick.current = false; // klik ini cuma sisa swipe, abaikan
-      return;
-    }
+    if (moved.current) { moved.current = false; return; } // sisa swipe, abaikan
     if (!isMobile.current) return;
-    if (revealed) return; // saat terbuka, tutup hanya lewat swipe
-    setRevealed(true); // tap gambar = buka (fallback praktis)
+    setRevealed((r) => !r);
   };
 
   return (
@@ -74,6 +75,7 @@ function Lesson({ index, num, title, children }) {
       data-cursor
       ref={ref}
       onPointerDown={onDown}
+      onPointerMove={onMove}
       onPointerUp={onUp}
       onPointerCancel={onUp}
       onClick={onClick}
@@ -117,8 +119,8 @@ export default function Lessons() {
             dan mengenal satu sama lain.</p>
         </div>
         <div className="cur" id="cur">
-          <Lesson index="0" num="01" title={<><span>Tiga lagu yang kamu suka</span><em className="jp">音楽</em></>}>
-            <div className="les-txt">
+          <Lesson index="0" num="01" title={<>Tiga lagu yang kamu suka<em className="jp">音楽</em></>}>
+            <div className="les-txt" onClick={(e) => e.stopPropagation()}>
               <p>Tiga lagu ini punya satu kesamaan: semuanya terasa seperti soundtrack untuk seseorang yang punya hati lembut, romantis, dan sedikit nostalgic. "Until I Found You" dari Stephen Sanchez membawa vibe cinta klasik yang hangat, seperti menemukan seseorang yang membuat dunia terasa lebih tenang. "Blue" dari yung kai terasa lebih dreamy, intimate, dan sedikit melankolis, cocok untuk orang yang suka menikmati perasaan secara diam-diam. Sementara "I Need You Most of All", juga dari Stephen Sanchez, punya nuansa rindu yang lebih dalam, seperti seseorang yang benar-benar tahu siapa yang paling berarti baginya.</p>
               <p>Menariknya, selera ini bukan sekadar suka lagu yang enak didengar. Ini tipe musik yang biasanya dipilih orang yang menghargai perasaan, detail kecil, dan suasana. Dari tiga lagu ini terasa sekali bahwa dia bukan cuma mendengarkan lagu, tapi benar-benar ikut merasakan ceritanya.</p>
             </div>
@@ -126,16 +128,16 @@ export default function Lessons() {
               <img src="/assets/ask/lagu.jpeg" alt="Screenshot jawaban Zee — lagu favorit" loading="lazy" decoding="async" />
             </figure>
           </Lesson>
-          <Lesson index="1" num="02" title={<><span>Hewan yang paling kamu sayangi</span><em className="jp">動物</em></>}>
-            <div className="les-txt">
+          <Lesson index="1" num="02" title={<>Hewan yang paling kamu sayangi<em className="jp">動物</em></>}>
+            <div className="les-txt" onClick={(e) => e.stopPropagation()}>
               <p>Tau gasii, ternyata suka hewan itu bisa jadi bocoran kepribadian juga. Red panda, si penyendiri manis di dahan-dahan tinggi yang pendiam tapi penasaran. Kucing yang independen, dekat secukupnya tapi tetap jaga jarak. Rubah yang lincah dan cerdik, selalu punya cara sendiri buat bertahan. Tiga-tiganya sama-sama bukan tipe yang gampang ditebak, tapi begitu didekati ternyata punya sisi lembut yang bikin susah move on. Dan ternyata, dari semua itu, hewan favoritnya jatuh ke red panda, si kecil pendiam yang diam-diam paling gampang bikin orang jatuh hati.</p>
             </div>
             <figure className="les-shot">
               <img src="/assets/ask/hewan.jpeg" alt="Screenshot jawaban Zee — hewan favorit" loading="lazy" decoding="async" />
             </figure>
           </Lesson>
-          <Lesson index="2" num="03" title={<><span>Cita-cita yang ingin kamu wujudkan</span><em className="jp">夢</em></>}>
-            <div className="les-txt">
+          <Lesson index="2" num="03" title={<>Cita-cita yang ingin kamu wujudkan<em className="jp">夢</em></>}>
+            <div className="les-txt" onClick={(e) => e.stopPropagation()}>
               <p>Ternyata di balik satu cita-cita, ada dua sisi yang jalan bareng. Ada mimpi yang lahir dari suka, punya usaha sendiri semacam cafe atau dessert shop yang manis dan personal. Tapi ada juga sisi yang lebih jujur ke diri sendiri, melihat kemampuan yang sudah dipunya dan pelan-pelan condong ke dunia HR. Bukan karena menyerah pada mimpi yang tadi, tapi karena tahu mana yang paling masuk akal buat dikejar sekarang. Justru kombinasi kayak gini yang nunjukin orangnya nggak asal ngejar cita-cita yang kedengeran keren doang. Semogaa apa yang kamu kejar itu tercapai di kemudian hari, Zee.</p>
             </div>
             <div className="les-shots">
