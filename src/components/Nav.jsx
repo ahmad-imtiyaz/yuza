@@ -13,9 +13,9 @@ export default function Nav() {
           <span className="brand-tx"><b>YUZA</b><i>my tomodachi :3</i></span>
         </a>
         <nav className="nav-links" id="navlinks">
-          <a className="nav-link" href="#gate" data-cursor><span>Temples</span><span className="alt">伽藍</span></a>
-          <a className="nav-link" href="#pathways" data-cursor><span>Gardens</span><span className="alt">庭園</span></a>
-          <a className="nav-link" href="#lessons" data-cursor><span>Rituals</span><span className="alt">神事</span></a>
+          <a className="nav-link" href="#gate" data-cursor><span>Kansha</span><span className="alt">感謝</span></a>
+          <a className="nav-link" href="#pathways" data-cursor><span>Sekilas</span><span className="alt">眺め</span></a>
+          <a className="nav-link" href="#lessons" data-cursor><span>Jiwa</span><span className="alt">心</span></a>
           <a className="nav-link" href="#eternity" data-cursor><span>Afterlight</span><span className="alt">残光</span></a>
         </nav>
         <button className="nav-burger" aria-label="Menu" data-cursor><i></i><i></i></button>

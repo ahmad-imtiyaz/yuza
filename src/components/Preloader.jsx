@@ -14,7 +14,7 @@ export default function Preloader() {
           <div className="pre-jp jp">影の道</div>
           <div className="pre-bar"><i id="pre-fill"></i></div>
           <div className="pre-meta">
-            <span>Raising the mountain temple</span><b><span id="pre-pct">0</span>%</b>
+            <span>灯をともす…</span><b><span id="pre-pct">0</span>%</b>
           </div>
         </div>
       </div>

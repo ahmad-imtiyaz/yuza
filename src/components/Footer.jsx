@@ -17,6 +17,14 @@ export default function Footer() {
           </span>
         </div>
 
+        <div className="lanterns" aria-hidden="true">
+          <span className="lantern" style={{ left:'12%', width:'9px', height:'13px', '--d':'19s', '--delay':'0s' }}></span>
+          <span className="lantern" style={{ left:'29%', width:'11px', height:'15px', '--d':'25s', '--delay':'4s' }}></span>
+          <span className="lantern" style={{ left:'47%', width:'8px', height:'12px', '--d':'21s', '--delay':'8s' }}></span>
+          <span className="lantern" style={{ left:'66%', width:'10px', height:'14px', '--d':'27s', '--delay':'2s' }}></span>
+          <span className="lantern" style={{ left:'84%', width:'9px', height:'13px', '--d':'23s', '--delay':'6s' }}></span>
+        </div>
+
         <div className="colophon">
           <svg viewBox="0 0 44 44" fill="none" width="34" height="34" aria-hidden="true">
             <circle cx="22" cy="25" r="8.6" fill="#e0231c" fillOpacity=".9" />

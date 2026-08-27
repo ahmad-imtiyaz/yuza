@@ -49,7 +49,7 @@ export default function Pathways() {
           </span>
         </div>
         <div className="sec-head" data-rv="fade">
-          <span className="k"><b>02</b> — Still Gardens</span><span className="rule"></span><span className="k jp">庭園</span>
+          <span className="k"><b>02</b> — Sekilas</span><span className="rule"></span><span className="k jp">眺め</span>
         </div>
         <div className="cards" id="cards">
           {CARD_META.map((m, i) => (

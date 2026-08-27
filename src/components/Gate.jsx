@@ -34,7 +34,7 @@ export default function Gate() {
           </span>
         </div>
         <div className="sec-head" data-rv="fade">
-          <span className="k"><b>01</b> — The Sanmon</span><span className="rule"></span><span className="k jp">山門</span>
+          <span className="k"><b>01</b> — Kansha</span><span className="rule"></span><span className="k jp">感謝</span>
         </div>
         <div className="gate-grid">
           <div className={`gate-slider is-on`} id="gate-slider" data-rv="up">

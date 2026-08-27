@@ -110,7 +110,7 @@ export default function Lessons() {
           </span>
         </div>
         <div className="sec-head" data-rv="fade">
-          <span className="k"><b>03</b> — Sacred Craft</span><span className="rule"></span><span className="k jp">手業</span>
+          <span className="k"><b>03</b> — Jiwa</span><span className="rule"></span><span className="k jp">心</span>
         </div>
         <div className="cur-head">
           <h2 className="display h-sec" data-rv="up">About Zee</h2>
