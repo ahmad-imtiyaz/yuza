@@ -582,16 +582,18 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 /* — footer */
 .foot{ position:relative; padding:clamp(50px,8vh,96px) var(--pad) clamp(26px,4vh,40px);
   border-top:1px solid var(--line-soft); }
-.foot-grid,.foot-base{ position:relative; }
-.foot-grid{ display:grid; grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,.6fr)); gap:clamp(22px,4vw,60px); }
-.foot h4{ margin:0 0 16px; font-size:10px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); }
-.foot ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
-.foot li a{ font-size:13px; color:#8f9a93; transition:color .35s; }
-.foot li a:hover{ color:var(--bone); }
-.foot-brand p{ margin:16px 0 0; max-width:34ch; font-size:13px; color:#79847e; }
-.foot-base{ display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;
-  margin-top:clamp(38px,6vh,74px); padding-top:20px; border-top:1px solid var(--line-soft);
-  font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+.colophon{ position:relative; max-width:560px; margin:0 auto; text-align:center;
+  display:flex; flex-direction:column; align-items:center; gap:18px; }
+.colophon svg{ width:34px; height:34px; opacity:.92; }
+.colophon-title{ margin:0; font-size:clamp(15px,2vw,20px); letter-spacing:.04em; color:var(--bone); }
+.colophon-note{ margin:0; max-width:42ch; font-size:13px; line-height:1.75; color:#9aa49d; }
+.colophon-jp{ color:var(--muted); letter-spacing:.22em; font-size:11px; }
+.colophon-top{ display:inline-flex; align-items:center; gap:8px; margin-top:4px;
+  padding:12px 22px; border:1px solid var(--line-soft); border-radius:100px;
+  font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--bone);
+  transition:color .4s var(--ease), border-color .4s, background .4s; }
+.colophon-top:hover{ color:#05070a; border-color:var(--bone); background:var(--bone); }
+.colophon-meta{ font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
 
 /* ============================================================= progress rail */
 .rail{ position:fixed; right:calc(var(--pad) - 4px); top:50%; transform:translateY(-50%); z-index:45;
@@ -616,7 +618,6 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
   .cur-head{ grid-template-columns:1fr; gap:18px; }
   .les{ grid-template-columns:44px minmax(0,1fr) 74px; }
   .les p{ display:none; }
-  .foot-grid{ grid-template-columns:1fr 1fr; }
 }
 
 /* — Lessons: swipe-to-reveal teks di mobile (gulungan ninjutsu) —
