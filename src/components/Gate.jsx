@@ -65,7 +65,7 @@ export default function Gate() {
           <div className="gate-copy">
             <h2 className="display h-sec" data-rv="up">Thank you for being in my life.</h2>
             <p className="lead" data-rv="up">Aku beruntung banget bisa kenal kamu dalam hidupku. Makasih udah mau main bareng, yang suka ngajak ngobrol santai tanpa alasan jelas, dan yang udah bantu aku upgrade versi diriku tanpa kamu sadari. Hal-hal kecil kayak gitu yang bikin aku ngerasa beruntung punya temen kayak kamu.</p>
-            <p className="body" data-rv="up">Kamu juga salah satu alasan kenapa aku masih ada di Discord sampe sekarang. Dan ini mungkin agak jujur — makasih juga udah ngabulin beberapa hal yang dulu rasanya gak bisa aku dapetin, sampe sekarang.</p>
+            <p className="body" data-rv="up">Kamu juga salah satu alasan kenapa aku masih ada di Discord sampe sekarang. To be honest makasih juga udah bantu aku dapetin beberapa hal yang dulu rasanya gak bisa aku dapetin, sampe sekarang.</p>
             <a className="arrowlink" href="#pathways" data-rv="fade" data-cursor>
               <span>lihat-lihat foto yuu...</span>
               <span className="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" strokeWidth="1.3"/></svg></span>
