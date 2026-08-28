@@ -26,7 +26,7 @@ export default function Pathways() {
     const id = setInterval(() => {
       setShots(pickRandom(3));
       setBlinkKey((k) => k + 1);
-    }, 4500);
+    }, 5500);
     return () => clearInterval(id);
   }, []);
 
@@ -63,6 +63,23 @@ export default function Pathways() {
                   loading="lazy"
                   decoding="async"
                 />
+                <span className="card-burst" key={`burst-${blinkKey}-${i}`} aria-hidden="true">
+                  {Array.from({ length: 12 }).map((_, p) => {
+                    const ang = (p / 12) * Math.PI * 2 + Math.random() * 0.6;
+                    const dist = 30 + Math.random() * 46;
+                    return (
+                      <i
+                        key={p}
+                        style={{
+                          '--bx': `${Math.cos(ang) * dist}%`,
+                          '--by': `${Math.sin(ang) * dist}%`,
+                          '--bs': `${6 + Math.random() * 14}px`,
+                          '--bd': `${Math.random() * 0.28}s`,
+                        }}
+                      />
+                    );
+                  })}
+                </span>
                 <span className="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" strokeWidth="1.3"/></svg></span>
                 <i className="glow" style={{ '--gx': '80.2%', '--gy': '23.9%', '--gr': '22%', '--gt': '6.1s', '--gt2': '9.7s', '--gc1': 'rgba(255,142,108,.50)', '--gc2': 'rgba(212,56,38,.24)' }}></i>
                 <div className="card-lab"><b>{m.lab} {m.num}</b><span className="jp">{m.jp}</span></div>
