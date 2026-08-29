@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import DriftWall from '../components/DriftWall.jsx';
-import { GARDEN_PHOTOS } from '../photos.js';
-import { probeImage, useImageOrient } from '../photo-orient.js';
+import { GARDEN_PHOTOS, GARDEN_MEDIA } from '../photos.js';
+import Masonry from '../components/Masonry.jsx';
+import { useImageOrient } from '../photo-orient.js';
 
 // Halaman /gallery — DriftWall interaktif + grid seluruh kenangan.
 function useResponsiveTiles() {
@@ -21,53 +22,16 @@ function useResponsiveTiles() {
   return tiles;
 }
 
-// 9 per halaman (3×3) di desktop, 8 (2×2×2) di mobile — mengikuti kolom grid.
-function usePageSize() {
-  const get = () => (typeof window !== 'undefined' && window.innerWidth < 640 ? 8 : 9);
-  const [size, setSize] = useState(get);
-  useEffect(() => {
-    const onResize = () => setSize(get());
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
-  return size;
-}
-
 export default function Gallery() {
   const [preview, setPreview] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [page, setPage] = useState(1);
   const tiles = useResponsiveTiles();
-  const pageSize = usePageSize();
 
-  const pageCount = Math.max(1, Math.ceil(GARDEN_PHOTOS.length / pageSize));
-  const safePage = Math.min(page, pageCount);
-  const pagePhotos = GARDEN_PHOTOS.slice((safePage - 1) * pageSize, safePage * pageSize);
-
-  // Fallback analisis runtime: kalau suatu foto belum punya w/h di photos.js,
-  // probe dimensi aslinya agar kartu tetap ikut orientasinya (portrait/landscape).
-  const [probed, setProbed] = useState({});
-  useEffect(() => {
-    let alive = true;
-    pagePhotos.forEach((p) => {
-      if (p.ratio == null) {
-        probeImage(p.image).then((r) => {
-          if (alive && r) setProbed((m) => ({ ...m, [p.image]: r }));
-        });
-      }
-    });
-    return () => { alive = false; };
-  }, [pagePhotos]);
+  // Semua memori (foto + video) ditampilkan dalam satu dinding masonry.
+  const mediaItems = GARDEN_MEDIA.map((m) => ({ ...m, img: m.src }));
 
   // Preview modal selalu pakai rasio foto asli (baked dulu, lalu di-confirm probe).
   const pv = useImageOrient(preview?.image ?? '', preview?.orient ?? 'square', preview?.ratio ?? 1);
-
-  const goToPage = (p) => {
-    setPage(Math.min(Math.max(1, p), pageCount));
-    document.querySelector('.gallery-grid-head')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  useEffect(() => { setPage((p) => Math.min(p, pageCount)); }, [pageCount]);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -144,43 +108,18 @@ export default function Gallery() {
           <span className="k"><b>全て</b> — Semua Kenangan</span><span className="rule"></span><span className="k jp">全部</span>
         </div>
 
-        <div className="gallery-grid">
-          {pagePhotos.map((p) => {
-            const ratio = p.ratio ?? probed[p.image]?.ratio ?? 1;
-            const orient = p.orient ?? probed[p.image]?.orient ?? 'square';
-            return (
-              <figure
-                className={`g-card${orient === 'landscape' ? ' is-land' : ''}`}
-                key={p.image}
-                onClick={() => setPreview(p)}
-                data-cursor
-                data-orient={orient}
-              >
-                <div className="g-fr" style={{ aspectRatio: String(ratio) }}>
-                  <img src={p.image} alt={p.title ?? ''} loading="lazy" decoding="async" />
-                  <i className="g-glow" aria-hidden="true"></i>
-                </div>
-                <figcaption className="g-cap"><b>{p.title}</b></figcaption>
-              </figure>
-            );
-          })}
-        </div>
-
-        {pageCount > 1 && (
-          <nav className="pager" aria-label="Halaman galeri">
-            <button className="pager-btn" disabled={safePage === 1} onClick={() => goToPage(safePage - 1)} data-cursor>←</button>
-            {Array.from({ length: pageCount }, (_, i) => i + 1).map((n) => (
-              <button
-                key={n}
-                className={`pager-num${n === safePage ? ' is-on' : ''}`}
-                aria-current={n === safePage ? 'page' : undefined}
-                onClick={() => goToPage(n)}
-                data-cursor
-              >{String(n).padStart(2, '0')}</button>
-            ))}
-            <button className="pager-btn" disabled={safePage === pageCount} onClick={() => goToPage(safePage + 1)} data-cursor>→</button>
-          </nav>
-        )}
+        <Masonry
+          items={mediaItems}
+          onItemClick={(m) => setPreview(m)}
+          ease="power3.out"
+          duration={0.6}
+          stagger={0.04}
+          animateFrom="bottom"
+          scaleOnHover={true}
+          hoverScale={0.96}
+          blurToFocus={true}
+          colorShiftOnHover={false}
+        />
       </div>
 
       {preview && (
@@ -189,8 +128,12 @@ export default function Gallery() {
             <button className="pv-close" aria-label="Close" onClick={closePreview}>
               <svg viewBox="0 0 14 14" fill="none" width="14" height="14"><path d="M2 2l10 10M12 2 2 12" stroke="#dfe7e0" strokeWidth="1.3"/></svg>
             </button>
-            <div className="pv-fr" style={{ aspectRatio: String(pv.ratio) }}>
-              <img src={preview.image} alt={preview.title ?? ''} decoding="async" />
+            <div className="pv-fr" style={{ aspectRatio: String(preview.ratio ?? pv.ratio) }}>
+              {preview.type === 'video' ? (
+                <video src={preview.src} poster={preview.poster} controls autoPlay muted loop playsInline />
+              ) : (
+                <img src={preview.image} alt={preview.title ?? ''} decoding="async" />
+              )}
               <i className="pv-glow" aria-hidden="true"></i>
             </div>
             <figcaption className="pv-cap">
