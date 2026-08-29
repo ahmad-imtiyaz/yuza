@@ -75,6 +75,7 @@ const PHOTOS = [
   { src: "/assets/garden/WhatsApp Image 2026-08-30 at 00.22.05 (2).jpeg", w: 1200, h: 1600 },
   { src: "/assets/garden/WhatsApp Image 2026-08-30 at 00.22.05 (3).jpeg", w: 1200, h: 1600 },
   { src: "/assets/garden/WhatsApp Image 2026-08-30 at 00.22.05.jpeg", w: 1200, h: 1600 },
+  { src: "/assets/garden/WhatsApp Image 2026-08-30 at 00.45.59.jpeg", w: 347, h: 1600 },
   { src: "/assets/gate/IMG_20260829_104451_332.jpg", w: 3048, h: 4064 },
   { src: "/assets/gate/IMG_20260829_104554_087.jpg", w: 3048, h: 4064 },
   { src: "/assets/gate/IMG_20260829_121047_639.jpg", w: 3048, h: 4064 },
