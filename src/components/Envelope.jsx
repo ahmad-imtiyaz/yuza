@@ -45,10 +45,10 @@ export default function Envelope({ open, onClose }) {
         <div className="env-back" aria-hidden="true" />
 
         <div className="env-letter">
-          <span className="env-to">Untuk Ayu</span>
-          <p className="env-hero">Terima kasih sudah ngasih aku kesempatan kedua</p>
-          <p className="env-sub">untuk memperbaiki semuanya.</p>
-          <p className="env-ps">Meninggalkan Discord dan kalian semua bukan pilihan terbaik.</p>
+          <span className="env-to">- アユへ -</span>
+          <p className="env-hero">Makasii yaa udah ngasih aku kesempatan kedua</p>
+          <p className="env-sub">untuk jadi yang lebih baik</p>
+          <p className="env-ps">Aku ga akan ninggalin Discord kok yuu.. yazna stay here :3</p>
         </div>
 
         <div className="env-pocket" aria-hidden="true" />
