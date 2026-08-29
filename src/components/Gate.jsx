@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react';
 
 export default function Gate() {
   const slides = [
-    { src: '/assets/gate/photo-1.jpg', alt: 'First Meeting', jp: '出会い', en: 'First Meeting' },
-    { src: '/assets/gate/photo-2.jpg', alt: 'First Walk', jp: '初散歩', en: 'First Walk' },
-    { src: '/assets/gate/photo-3.jpg', alt: 'The Promise', jp: '約束', en: 'The Promise' },
+    { src: '/assets/gate/IMG_20260829_104451_332.jpg', alt: 'First Meeting', jp: '出会い', en: 'First Meeting' },
+    { src: '/assets/gate/IMG_20260829_104554_087.jpg', alt: 'First Walk', jp: '初散歩', en: 'First Walk' },
+    { src: '/assets/gate/IMG_20260829_121047_639.jpg', alt: 'The Promise', jp: '約束', en: 'The Promise' },
   ];
 
   const [active, setActive] = useState(0);
