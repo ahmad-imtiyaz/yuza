@@ -19,8 +19,8 @@
 
 /* envelope body ---------------------------------------------------------- */
 .env{
-  --ew: min(310px, 80vw);
-  position:relative; width:var(--ew); height:calc(var(--ew) * 1.45);
+  --ew: min(330px, 84vw);
+  position:relative; width:var(--ew); height:calc(var(--ew) * 1.62);  /* model panjang */
   margin:auto; perspective:1300px; cursor:pointer;
   filter:drop-shadow(0 30px 60px rgba(0,0,0,.55));
   transition:transform .6s var(--ease-out);
@@ -35,20 +35,20 @@
 
 /* letter card — behind pocket, slides up when opened -------------------- */
 .env-letter{
-  position:absolute; left:12%; right:12%; top:9%; bottom:9%; z-index:2;
-  border-radius:11px; padding:24px 20px 20px;
+  position:absolute; left:7%; right:7%; top:6%; bottom:6%; z-index:2;
+  border-radius:12px; padding:30px 22px;
   background:linear-gradient(180deg,#fbf3e0,#f1e3c8);
   color:#43321d; text-align:center;
   display:flex; flex-direction:column; justify-content:center; gap:9px;
   box-shadow:0 12px 34px -14px rgba(0,0,0,.55);
-  transform:translateY(4%) rotate(-.5deg);
+  transform:translateY(0) scale(.94) rotate(-.4deg);
   transition:transform .9s var(--ease-out);
   will-change:transform;
 }
 .env.is-opened .env-letter{
-  z-index:6;                       /* di depan saat keluar, pesan tetap terbaca */
-  transform:translateY(-78%) rotate(0deg);
-  transition-delay:.18s;
+  z-index:6;                       /* di depan: pesan terbaca & centered di card */
+  transform:translateY(0) scale(1) rotate(0deg);
+  transition-delay:.2s;
 }
 .env-to{ font-family:'Onest',sans-serif; font-size:12px; letter-spacing:.32em; text-transform:uppercase; color:#a9794a; }
 .env-hero{

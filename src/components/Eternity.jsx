@@ -34,7 +34,7 @@ export default function Eternity() {
               <path d="M3 8.5 12 14l9-5.5" stroke="currentColor" strokeWidth="1.4"/>
             </svg>
           </span>
-          <span>Sealed for Ayu</span>
+          <span>Surprise</span>
         </button>
       </section>
 
