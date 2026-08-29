@@ -1,7 +1,7 @@
 /* ============================================================= Envelope (hongbao) */
 .env-overlay{
   position:fixed; inset:0; z-index:120;
-  display:grid; place-items:center; padding:24px;
+  display:flex; flex-direction:column; align-items:center; overflow:auto; padding:32px 24px;
   background:radial-gradient(125% 120% at 50% 28%, rgba(10,12,16,.80), rgba(3,4,6,.97));
   -webkit-backdrop-filter:blur(7px); backdrop-filter:blur(7px);
   opacity:0; visibility:hidden; pointer-events:none;
@@ -19,9 +19,9 @@
 
 /* envelope body ---------------------------------------------------------- */
 .env{
-  --ew: min(340px, 82vw);
-  position:relative; width:var(--ew); height:calc(var(--ew) * 1.34);
-  perspective:1300px; cursor:pointer;
+  --ew: min(310px, 80vw);
+  position:relative; width:var(--ew); height:calc(var(--ew) * 1.45);
+  margin:auto; perspective:1300px; cursor:pointer;
   filter:drop-shadow(0 30px 60px rgba(0,0,0,.55));
   transition:transform .6s var(--ease-out);
 }
@@ -35,8 +35,8 @@
 
 /* letter card — behind pocket, slides up when opened -------------------- */
 .env-letter{
-  position:absolute; left:8.5%; right:8.5%; top:7.5%; bottom:7.5%; z-index:2;
-  border-radius:11px; padding:26px 22px 22px;
+  position:absolute; left:12%; right:12%; top:9%; bottom:9%; z-index:2;
+  border-radius:11px; padding:24px 20px 20px;
   background:linear-gradient(180deg,#fbf3e0,#f1e3c8);
   color:#43321d; text-align:center;
   display:flex; flex-direction:column; justify-content:center; gap:9px;
@@ -47,20 +47,19 @@
 }
 .env.is-opened .env-letter{
   z-index:6;                       /* di depan saat keluar, pesan tetap terbaca */
-  transform:translateY(-82%) rotate(0deg);
+  transform:translateY(-78%) rotate(0deg);
   transition-delay:.18s;
 }
 .env-to{ font-family:'Onest',sans-serif; font-size:12px; letter-spacing:.32em; text-transform:uppercase; color:#a9794a; }
 .env-hero{
   margin:0; font-family:'Cormorant Garamond','Noto Serif',Georgia,'Times New Roman',serif;
-  font-style:italic; font-weight:600; font-size:clamp(19px,5.4vw,25px); line-height:1.22;
+  font-style:italic; font-weight:600; font-size:clamp(18px,5vw,22px); line-height:1.22;
   background:linear-gradient(180deg,#b9892f,#8a5e1c);
   -webkit-background-clip:text; background-clip:text; color:transparent;
 }
 .env-sub{ margin:0; font-family:'Cormorant Garamond','Noto Serif',Georgia,serif; font-style:italic;
-  font-size:clamp(15px,4.2vw,19px); color:#6c5126; }
+  font-size:clamp(14px,4vw,17px); color:#6c5126; }
 .env-ps{ margin:7px 0 0; font-family:'Onest',sans-serif; font-size:11px; line-height:1.6; color:#7c5f37; opacity:.92; }
-.env-sign{ margin-top:3px; font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-size:15px; color:#8a5e1c; }
 
 /* front pocket — covers lower part, with V notch at top ---------------- */
 .env-pocket{

@@ -46,13 +46,9 @@ export default function Envelope({ open, onClose }) {
 
         <div className="env-letter">
           <span className="env-to">Untuk Ayu</span>
-          <p className="env-hero">Terima kasih sudah memberiku kesempatan kedua</p>
+          <p className="env-hero">Terima kasih sudah ngasih aku kesempatan kedua</p>
           <p className="env-sub">untuk memperbaiki semuanya.</p>
-          <p className="env-ps">
-            Meninggalkan Discord dan kalian ternyata bukan pilihan terbaik &mdash;
-            aku bersyukur masih di sini.
-          </p>
-          <span className="env-sign">&mdash; dengan tulus, aku</span>
+          <p className="env-ps">Meninggalkan Discord dan kalian semua bukan pilihan terbaik.</p>
         </div>
 
         <div className="env-pocket" aria-hidden="true" />
