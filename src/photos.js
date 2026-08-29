@@ -5,6 +5,13 @@
 // dipakai agar kartu ikut orientasi foto (square/landscape/portrait), nol crop.
 import { classifyOrientation } from './photo-orient.js';
 
+// Turunkan URL thumbnail (WebP, ukuran display) dari src asli yang sudah
+// percent-encoded. Browser akan mendekode URL ini kembali ke nama file literal
+// di server statis. Contoh:
+//   /assets/garden/IMG%281%29.jpg -> /assets/thumbs/garden/IMG%281%29.webp
+const thumbOf = (src) =>
+  src.replace('/assets/', '/assets/thumbs/').replace(/\.(jpe?g|png)$/i, '.webp');
+
 const PHOTOS = [
   { src: "/assets/garden/bb07ef38-ef6e-4606-8dd0-ff3e119744fc.jpg", w: 3048, h: 4064 },
   { src: "/assets/garden/IMG_20260726_172022_029.jpg", w: 3048, h: 4064 },
@@ -83,6 +90,7 @@ const PHOTOS = [
 
 export const GARDEN_PHOTOS = PHOTOS.map(({ src, w, h }, i) => ({
   image: src,
+  thumb: thumbOf(src),
   title: `Memory ${String(i + 1).padStart(2, '0')}`,
   w,
   h,
@@ -108,6 +116,7 @@ export const GARDEN_MEDIA = [
     type: 'image',
     src: p.image,
     image: p.image,
+    thumb: p.thumb,
     title: p.title,
     ratio: p.ratio,
   })),

@@ -125,10 +125,15 @@ const Masonry = ({
   };
 
   useEffect(() => {
-    // Video tidak di-preload (berat); cukup tunggu gambar selesai dimuat.
-    const urls = items.filter((i) => i.type !== 'video').map((i) => i.src || i.img);
-    preloadImages(urls).then(() => setImagesReady(true));
-  }, [items]);
+    // Preload HANYA batch pertama (above-the-fold) pakai thumbnail, agar entrance
+    // animation langsung jalan dan tidak memicu puluhan request sekaligus.
+    // Sisanya mengandalkan native loading="lazy" pada <img>. Video tetap tidak di-preload.
+    const urls = items
+      .filter((i) => i.type !== 'video')
+      .map((i) => i.thumb || i.src || i.img);
+    const firstBatch = urls.slice(0, Math.max(columns * 3, 12));
+    preloadImages(firstBatch).then(() => setImagesReady(true));
+  }, [items, columns]);
 
   const hasMounted = useRef(false);
 
@@ -235,7 +240,7 @@ const Masonry = ({
           ) : (
             <img
               className="item-media item-img"
-              src={item.src || item.img}
+              src={item.thumb || item.src || item.img}
               alt={item.title ?? ''}
               loading="lazy"
               decoding="async"

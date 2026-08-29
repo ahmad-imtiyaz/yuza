@@ -94,8 +94,8 @@ export default function Gallery() {
 
         <div className="drift-wrap">
           <DriftWall
-            items={GARDEN_PHOTOS}
-            onTileClick={(item) => setPreview(item)}
+            items={GARDEN_PHOTOS.map((p) => ({ ...p, image: p.thumb, full: p.image }))}
+            onTileClick={(item) => setPreview({ ...item, image: item.full ?? item.image })}
             pauseOnHover={true}
             dim={0.5}
             fade={0.7}
