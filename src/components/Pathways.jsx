@@ -54,7 +54,7 @@ export default function Pathways() {
         <div className="cards" id="cards">
           {CARD_META.map((m, i) => (
             <article className="card" key={i} data-rv="up" data-view={i} data-cursor>
-              <div className="card-fr">
+              <div className="card-fr card-fr--orient" style={{ '--ar': String(shots[i]?.ratio ?? 1) }}>
                 <img
                   key={`${blinkKey}-${i}`}
                   className="card-blink"

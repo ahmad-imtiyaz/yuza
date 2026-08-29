@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import DriftWall from '../components/DriftWall.jsx';
 import { GARDEN_PHOTOS } from '../photos.js';
+import { probeImage, useImageOrient } from '../photo-orient.js';
 
 // Halaman /gallery — DriftWall interaktif + grid seluruh kenangan.
 function useResponsiveTiles() {
@@ -42,6 +43,24 @@ export default function Gallery() {
   const pageCount = Math.max(1, Math.ceil(GARDEN_PHOTOS.length / pageSize));
   const safePage = Math.min(page, pageCount);
   const pagePhotos = GARDEN_PHOTOS.slice((safePage - 1) * pageSize, safePage * pageSize);
+
+  // Fallback analisis runtime: kalau suatu foto belum punya w/h di photos.js,
+  // probe dimensi aslinya agar kartu tetap ikut orientasinya (portrait/landscape).
+  const [probed, setProbed] = useState({});
+  useEffect(() => {
+    let alive = true;
+    pagePhotos.forEach((p) => {
+      if (p.ratio == null) {
+        probeImage(p.image).then((r) => {
+          if (alive && r) setProbed((m) => ({ ...m, [p.image]: r }));
+        });
+      }
+    });
+    return () => { alive = false; };
+  }, [pagePhotos]);
+
+  // Preview modal selalu pakai rasio foto asli (baked dulu, lalu di-confirm probe).
+  const pv = useImageOrient(preview?.image ?? '', preview?.orient ?? 'square', preview?.ratio ?? 1);
 
   const goToPage = (p) => {
     setPage(Math.min(Math.max(1, p), pageCount));
@@ -126,15 +145,25 @@ export default function Gallery() {
         </div>
 
         <div className="gallery-grid">
-          {pagePhotos.map((p) => (
-            <figure className="g-card" key={p.image} onClick={() => setPreview(p)} data-cursor>
-              <div className="g-fr">
-                <img src={p.image} alt={p.title ?? ''} loading="lazy" decoding="async" />
-                <i className="g-glow" aria-hidden="true"></i>
-              </div>
-              <figcaption className="g-cap"><b>{p.title}</b></figcaption>
-            </figure>
-          ))}
+          {pagePhotos.map((p) => {
+            const ratio = p.ratio ?? probed[p.image]?.ratio ?? 1;
+            const orient = p.orient ?? probed[p.image]?.orient ?? 'square';
+            return (
+              <figure
+                className={`g-card${orient === 'landscape' ? ' is-land' : ''}`}
+                key={p.image}
+                onClick={() => setPreview(p)}
+                data-cursor
+                data-orient={orient}
+              >
+                <div className="g-fr" style={{ aspectRatio: String(ratio) }}>
+                  <img src={p.image} alt={p.title ?? ''} loading="lazy" decoding="async" />
+                  <i className="g-glow" aria-hidden="true"></i>
+                </div>
+                <figcaption className="g-cap"><b>{p.title}</b></figcaption>
+              </figure>
+            );
+          })}
         </div>
 
         {pageCount > 1 && (
@@ -160,7 +189,7 @@ export default function Gallery() {
             <button className="pv-close" aria-label="Close" onClick={closePreview}>
               <svg viewBox="0 0 14 14" fill="none" width="14" height="14"><path d="M2 2l10 10M12 2 2 12" stroke="#dfe7e0" strokeWidth="1.3"/></svg>
             </button>
-            <div className="pv-fr">
+            <div className="pv-fr" style={{ aspectRatio: String(pv.ratio) }}>
               <img src={preview.image} alt={preview.title ?? ''} decoding="async" />
               <i className="pv-glow" aria-hidden="true"></i>
             </div>
