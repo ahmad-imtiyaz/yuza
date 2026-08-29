@@ -128,7 +128,7 @@ export default function Gallery() {
             <button className="pv-close" aria-label="Close" onClick={closePreview}>
               <svg viewBox="0 0 14 14" fill="none" width="14" height="14"><path d="M2 2l10 10M12 2 2 12" stroke="#dfe7e0" strokeWidth="1.3"/></svg>
             </button>
-            <div className="pv-fr" style={{ aspectRatio: String(preview.ratio ?? pv.ratio) }}>
+            <div className="pv-fr" style={{ '--ar': String(preview.ratio ?? pv.ratio) }}>
               {preview.type === 'video' ? (
                 <video src={preview.src} poster={preview.poster} controls autoPlay muted loop playsInline />
               ) : (

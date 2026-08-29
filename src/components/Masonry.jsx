@@ -233,9 +233,13 @@ const Masonry = ({
               preload="metadata"
             />
           ) : (
-            <div
+            <img
               className="item-media item-img"
-              style={{ backgroundImage: `url(${item.src || item.img})` }}
+              src={item.src || item.img}
+              alt={item.title ?? ''}
+              loading="lazy"
+              decoding="async"
+              draggable={false}
             />
           )}
           {item.title ? <span className="item-cap">{item.title}</span> : null}

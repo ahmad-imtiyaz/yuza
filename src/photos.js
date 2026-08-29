@@ -1,12 +1,12 @@
 // Daftar semua foto & video kenangan — path relatif ke public/assets/.
 // Dibake dari isi folder garden/ & gate/ (jalankan generator yang sama untuk
-// menyegarkan setelah menambah/mengganti file). w/h = dimensi piksel asli
+// menyegarkan setelah menambah/mengganti file). URL di-encode (spasi -> %20)
+// biar aman dipakai di CSS url() maupun <img src>. w/h = dimensi piksel asli
 // dipakai agar kartu ikut orientasi foto (square/landscape/portrait), nol crop.
 import { classifyOrientation } from './photo-orient.js';
 
 const PHOTOS = [
   { src: "/assets/garden/bb07ef38-ef6e-4606-8dd0-ff3e119744fc.jpg", w: 3048, h: 4064 },
-  { src: "/assets/garden/ga.jpeg", w: 720, h: 1600 },
   { src: "/assets/garden/IMG_20260726_172022_029.jpg", w: 3048, h: 4064 },
   { src: "/assets/garden/IMG_20260726_172029_709.jpg", w: 3048, h: 4064 },
   { src: "/assets/garden/IMG_20260726_172042_070.jpg", w: 3048, h: 4064 },
@@ -69,14 +69,14 @@ const PHOTOS = [
   { src: "/assets/garden/IMG-20260727-WA0006.jpg", w: 640, h: 427 },
   { src: "/assets/garden/IMG-20260727-WA0009.jpg", w: 640, h: 427 },
   { src: "/assets/garden/IMG-20260808-WA0048.jpg", w: 3024, h: 4032 },
-  { src: "/assets/garden/IMG-20260808-WA0092(1).jpg", w: 4160, h: 3120 },
+  { src: "/assets/garden/IMG-20260808-WA0092%281%29.jpg", w: 4160, h: 3120 },
   { src: "/assets/garden/IMG-20260808-WA0097.jpg", w: 3024, h: 4032 },
-  { src: "/assets/garden/WhatsApp Image 2026-08-30 at 00.22.04.jpeg", w: 1200, h: 1600 },
-  { src: "/assets/garden/WhatsApp Image 2026-08-30 at 00.22.05 (1).jpeg", w: 1200, h: 1600 },
-  { src: "/assets/garden/WhatsApp Image 2026-08-30 at 00.22.05 (2).jpeg", w: 1200, h: 1600 },
-  { src: "/assets/garden/WhatsApp Image 2026-08-30 at 00.22.05 (3).jpeg", w: 1200, h: 1600 },
-  { src: "/assets/garden/WhatsApp Image 2026-08-30 at 00.22.05.jpeg", w: 1200, h: 1600 },
-  { src: "/assets/garden/WhatsApp Image 2026-08-30 at 00.45.59.jpeg", w: 347, h: 1600 },
+  { src: "/assets/garden/WhatsApp%20Image%202026-08-30%20at%2000.22.04.jpeg", w: 1200, h: 1600 },
+  { src: "/assets/garden/WhatsApp%20Image%202026-08-30%20at%2000.22.05%20%281%29.jpeg", w: 1200, h: 1600 },
+  { src: "/assets/garden/WhatsApp%20Image%202026-08-30%20at%2000.22.05%20%282%29.jpeg", w: 1200, h: 1600 },
+  { src: "/assets/garden/WhatsApp%20Image%202026-08-30%20at%2000.22.05%20%283%29.jpeg", w: 1200, h: 1600 },
+  { src: "/assets/garden/WhatsApp%20Image%202026-08-30%20at%2000.22.05.jpeg", w: 1200, h: 1600 },
+  { src: "/assets/garden/WhatsApp%20Image%202026-08-30%20at%2000.45.59.jpeg", w: 347, h: 1600 },
   { src: "/assets/gate/IMG_20260829_104451_332.jpg", w: 3048, h: 4064 },
   { src: "/assets/gate/IMG_20260829_104554_087.jpg", w: 3048, h: 4064 },
   { src: "/assets/gate/IMG_20260829_121047_639.jpg", w: 3048, h: 4064 },
