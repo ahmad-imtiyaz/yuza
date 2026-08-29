@@ -6,6 +6,7 @@ import { classifyOrientation } from './photo-orient.js';
 
 const PHOTOS = [
   { src: "/assets/garden/bb07ef38-ef6e-4606-8dd0-ff3e119744fc.jpg", w: 3048, h: 4064 },
+  { src: "/assets/garden/ga.jpeg", w: 720, h: 1600 },
   { src: "/assets/garden/IMG_20260726_172022_029.jpg", w: 3048, h: 4064 },
   { src: "/assets/garden/IMG_20260726_172029_709.jpg", w: 3048, h: 4064 },
   { src: "/assets/garden/IMG_20260726_172042_070.jpg", w: 3048, h: 4064 },
